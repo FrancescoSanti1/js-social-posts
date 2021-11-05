@@ -75,6 +75,7 @@ const listaPost = [
     }
 ];
 
+
 // con un ciclo for attraverso l'array di oggetti
 for (let i = 0; i < listaPost.length; i++) {
 
@@ -99,7 +100,7 @@ for (let i = 0; i < listaPost.length; i++) {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button  js-like-button" href="#" data-postid="${i}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
@@ -133,22 +134,53 @@ for (let i = 0; i < listaPost.length; i++) {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button  js-like-button" href="#" data-postid="${i}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">${listaPost[i].numLikes}</b> persone
+                        Piace a <b id="like-counter-${i}" class="js-likes-counter">${listaPost[i].numLikes}</b> persone
                     </div>
                 </div> 
             </div>            
         </div>`;
     }
+
+}
+
+for (let i = 0; i < listaPost.length; i++) {
+    console.log(document.getElementsByClassName("like-button")[i]);
+
+    let giaCliccata = false;
+
+    // a ogni bottone la funzione di ascolto del click
+    document.getElementsByClassName("like-button")[i].addEventListener("click", function() {
+
+        console.log("valore della variabile flag:", giaCliccata);
+
+        if (!giaCliccata) {
+
+            // assegno al pulsante la classe ".like-button--liked"
+            this.classList.add("like-button--liked");
+
+            // incremento di uno il numero di like
+            listaPost[i].numLikes++;
+
+            // aggiorno il numero di like visualizzato in pagina
+            document.getElementById(`like-counter-${i}`).innerHTML = listaPost[i].numLikes;
+
+            // aggiorno il flag in modo che non venga più aggiornato il contatore dei mi piace, dal momento che è stato già messo
+            giaCliccata = true;
+        }
+        
+    });
 }
 
 
-// al click su "mi piace"
-    // assegno al pulsante la classe ".like-button--liked"
-    // incremento di uno il numero di like
-    // aggiorno il numero di like visualizzato in pagina
+
+
+
+
+    
+    
